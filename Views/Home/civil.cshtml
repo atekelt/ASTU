@@ -1,0 +1,55 @@
+﻿@using GleamTech.Web.Mvc
+@using GleamTech.FileUltimate
+@{
+    ViewBag.Title = "civil";
+    Layout = "~/Views/Shared/_LayoutPagesub.cshtml";
+}
+
+<h2>School of Civil Engineering and Architecture</h2>
+
+
+<select name="forma" onchange="location = this.value;">
+    <option value="civil" selected disabled>School of Civil Engineering and Architecture</option>
+    <option value="pre">Pre-Engineering</option>
+    <option value="applied">School of Applied Natural Sciences</option>
+    <option value="elec">School of Electrical Engineering and Computing</option>
+    <option value="mech">School of Mechanical, Chemical and Materials Engineering</option>
+</select>
+
+<h1></h1>
+
+@{
+    var filemanager = new FileManager
+    {
+        Width = 800,
+        Height = 600,
+        Resizable = true
+    };
+
+    var rootfolder = new FileManagerRootFolder
+    {
+        Name = "School of Civil Engineering and Architecture",
+        Location = "~/App_Data/School of Civil Engineering and Architecture"
+    };
+
+    rootfolder.AccessControls.Add(new FileManagerAccessControl
+    {
+        Path = @"\",
+        AllowedPermissions = FileManagerPermissions.Download | FileManagerPermissions.ListSubfolders | FileManagerPermissions.ListFiles | FileManagerPermissions.Preview,
+        DeniedPermissions = FileManagerPermissions.Compress | FileManagerPermissions.Copy | FileManagerPermissions.Create | FileManagerPermissions.Cut |
+        FileManagerPermissions.Delete | FileManagerPermissions.Edit | FileManagerPermissions.Extract | FileManagerPermissions.Upload | FileManagerPermissions.Print
+    });
+
+    filemanager.RootFolders.Add(rootfolder);
+}
+
+<html>
+<head>
+    @Html.RenderCss(filemanager)
+    @Html.RenderJs(filemanager)
+</head>
+<body>
+    @Html.RenderControl(filemanager)
+</body>
+</html>
+

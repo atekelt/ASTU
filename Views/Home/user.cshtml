@@ -1,0 +1,46 @@
+﻿@using GleamTech.Web.Mvc;
+@using GleamTech.FileUltimate;
+@{
+    ViewBag.Title = "user";
+    Layout = "~/Views/Shared/_LayoutPageuser.cshtml";
+}
+
+<h2>User</h2>
+<h4>@Session["name"]</h4>
+
+@{
+    var filemanager = new FileManager
+    {
+        Width = 800,
+        Height = 600,
+        Resizable = true
+    };
+
+    var rootfolder = new FileManagerRootFolder
+    {
+        Name = "ROOT",
+        Location = "~/App_Data/"
+    };
+
+    rootfolder.AccessControls.Add(new FileManagerAccessControl
+    {
+        Path = @"\",
+        AllowedPermissions = FileManagerPermissions.Copy | FileManagerPermissions.Download | FileManagerPermissions.Upload | FileManagerPermissions.Paste |
+        FileManagerPermissions.ListFiles | FileManagerPermissions.ListSubfolders | FileManagerPermissions.Preview,
+        DeniedPermissions = FileManagerPermissions.Cut | FileManagerPermissions.Delete | FileManagerPermissions.Edit | FileManagerPermissions.Print
+
+    });
+
+    filemanager.RootFolders.Add(rootfolder);
+}
+
+<html>
+<head>
+    @Html.RenderCss(filemanager)
+    @Html.RenderJs(filemanager)
+</head>
+<body>
+    @Html.RenderControl(filemanager)
+</body>
+</html>
+
